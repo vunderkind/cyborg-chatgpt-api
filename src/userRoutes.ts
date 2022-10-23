@@ -17,6 +17,10 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
+    if (!(email && password)) {
+        res.status(422);
+        res.send('Both username and password must be provided');
+    }
     try {
         const loggedIn = await dbHelpers.loginUser({email, password });
         if (loggedIn) {
