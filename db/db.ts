@@ -30,7 +30,7 @@ function createTable(db) {
     (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email VARCHAR(100) UNIQUE NOT NULL,
-      password   VARCHAR(50) NOT NULL
+      password   VARCHAR(500) NOT NULL
     );
     CREATE TABLE authors
     (

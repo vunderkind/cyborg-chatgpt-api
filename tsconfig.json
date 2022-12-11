@@ -3,7 +3,7 @@
     "target": "ES2022",
     "module": "Node16",
     "lib": ["ES2022"],
-    "moduleResolution": "Node18",
+    "moduleResolution": "nodenext",
     "rootDir": ".",
     "outDir": "build",
     "allowSyntheticDefaultImports": true,
@@ -20,5 +20,5 @@
     "strictNullChecks": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "__tests__/**/*"]
+  "include": ["src/**/*", "__tests__/**/*", "**/*.ts", "**/*.tsx"],
 }
