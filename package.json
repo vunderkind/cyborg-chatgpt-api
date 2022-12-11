@@ -38,6 +38,8 @@
   "dependencies": {
     "chatgpt": "^2.0.7",
     "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.2",
     "tslib": "~2.4"
   },
   "volta": {
