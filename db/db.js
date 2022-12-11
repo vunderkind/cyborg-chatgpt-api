@@ -29,7 +29,7 @@ function createTable(db) {
     CREATE TABLE users
     (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name   VARCHAR(30) NOT NULL,
+      email VARCHAR(100) UNIQUE NOT NULL,
       password   VARCHAR(50) NOT NULL
     );
     CREATE TABLE authors
