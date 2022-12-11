@@ -30,8 +30,45 @@ function createTable(db) {
     (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name   VARCHAR(30) NOT NULL,
-      password   VARCHAR(50) NOT NULL,
-    )
+      password   VARCHAR(50) NOT NULL
+    );
+    CREATE TABLE authors
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        penName VARCHAR(30),
+        userId INTEGER NOT NULL,
+        FOREIGN KEY (userId) REFERENCES users(id)
+    );
+    CREATE TABLE stories
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        genreId INTEGER NOT NULL,
+        authorId INTEGER NOT NULL,
+        title VARCHAR(200) NOT NULL,
+        FOREIGN KEY (authorId) REFERENCES authors(id),
+        FOREIGN KEY (genreId) REFERENCES genres(id)
+    );
+    CREATE TABLE genres
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name VARCHAR(10) NOT NULL,
+        description VARCHAR(500) NOT NULL
+    );
+    CREATE TABLE chapters
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        storyId INTEGER NOT NULL,
+        text TEXT NOT NULL,
+        FOREIGN KEY (storyId) REFERENCES stories(id)
+    );
+    CREATE TABLE likes
+    (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        storyId INTEGER NOT NULL,
+        userId INTEGER NOT NULL,
+        FOREIGN KEY (storyId) REFERENCES stories(id),
+        FOREIGN KEY (userId) REFERENCES users(id)
+    );
   `);
   }
 
