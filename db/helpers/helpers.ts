@@ -26,6 +26,28 @@ async function createUser({email, password}: Credentials): Promise<any>{
     console.log(hashing);
 }
 
+function addAuthorName(authorName: string, userId: number): void {
+    db.run(`INSERT INTO authors (penName, userId) VALUES(${authorName}, ${userId})`,
+    function(error) {
+        if (error) {
+            return error;
+        }
+    return `Inserted a row with ID: ${this.lastID}`
+    }
+    )
+}
+
+function updateAuthorName(authorName: string, userId: string): void {
+    db.run(`UPDATE authors SET penName = '${authorName}' WHERE userId = '${userId}'`,
+    function(error) {
+        if (error) {
+            return error;
+        }
+    return `Inserted a row with ID: ${this.lastID}`
+    }
+    )
+}
+
 
 async function loginUser({email, password}: Credentials): Promise<any>{
     const hash = await new Promise((resolve, reject) => {
