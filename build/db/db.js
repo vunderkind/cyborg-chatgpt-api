@@ -46,7 +46,7 @@ function createTable(db) {
     CREATE TABLE genres
     (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name VARCHAR(10) NOT NULL,
+        name VARCHAR(10) UNIQUE NOT NULL,
         description VARCHAR(500) NOT NULL
     );
     CREATE TABLE chapters

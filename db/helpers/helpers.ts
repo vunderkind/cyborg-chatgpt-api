@@ -68,4 +68,6 @@ createUser({email: "justin@gmail.com", password: "hey"})
 export {
     createUser,
     loginUser,
+    addAuthorName,
+    updateAuthorName
 }

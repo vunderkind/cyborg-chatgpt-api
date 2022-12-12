@@ -15,6 +15,22 @@ async function createUser({ email, password }) {
     });
     console.log(hashing);
 }
+function addAuthorName(authorName, userId) {
+    db.run(`INSERT INTO authors (penName, userId) VALUES(${authorName}, ${userId})`, function (error) {
+        if (error) {
+            return error;
+        }
+        return `Inserted a row with ID: ${this.lastID}`;
+    });
+}
+function updateAuthorName(authorName, userId) {
+    db.run(`UPDATE authors SET penName = '${authorName}' WHERE userId = '${userId}'`, function (error) {
+        if (error) {
+            return error;
+        }
+        return `Inserted a row with ID: ${this.lastID}`;
+    });
+}
 async function loginUser({ email, password }) {
     const hash = await new Promise((resolve, reject) => {
         db.get(`SELECT password FROM users WHERE email = ?`, [email], function (err, row) {
@@ -27,5 +43,5 @@ async function loginUser({ email, password }) {
     return match;
 }
 createUser({ email: "justin@gmail.com", password: "hey" });
-export { createUser, loginUser, };
+export { createUser, loginUser, addAuthorName, updateAuthorName };
 //# sourceMappingURL=helpers.js.map
