@@ -5,7 +5,7 @@ async function createUser({ email, password }) {
     const emailValidator = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!emailValidator.test(email))
         throw new Error(`${email} is not an email address`);
-    const hashing = bcrypt.hash(password, saltRounds, (_, hash) => {
+    bcrypt.hash(password, saltRounds, (_, hash) => {
         db.run(`INSERT INTO users (email, password) VALUES(?,?)`, [email, hash], function (error) {
             if (error) {
                 throw new Error(error.message);
@@ -13,10 +13,7 @@ async function createUser({ email, password }) {
             console.log(`Inserted a row with ID: ${this.lastID}`);
         });
     });
-    console.log('hashing', hashing);
-    return hashing;
 }
-createUser({ email: 'jutn@hay.com', password: 'sheh' });
 function addAuthorName(authorName, userId) {
     db.run(`INSERT INTO authors (penName, userId) VALUES(${authorName}, ${userId})`, function (error) {
         if (error) {

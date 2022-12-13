@@ -15,7 +15,11 @@ const genres = [
 ];
 genres.forEach(genre => {
     db.run(`INSERT OR IGNORE INTO genres (name, description) VALUES('${genre.name}', '${genre.description}')`, function (error) {
-        console.log(error);
+        if (error)
+            throw new Error(error.message);
+        else {
+            console.log(`Inserted new genre ${genre.name} with id: ${this.lastID}`);
+        }
     });
 });
 //# sourceMappingURL=genreSeed.js.map

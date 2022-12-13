@@ -61,9 +61,34 @@ async function loginUser({email, password}: Credentials): Promise<boolean>{
     return match;
 }
 
+function addChapter({storyId, text}: {storyId: number, text: string}): void {
+    db.run(`INSERT INTO chapters (storyId, text) VALUES(?,?)`,
+    [storyId, text],
+    function (error) {
+        if (error) throw new Error(error.message)
+    return `Inserted a row with ID: ${this.lastID}`
+    }
+    )
+}
+
+function likeStory({storyId, userId}: {storyId: string, userId: string}): boolean {
+    db.run(`INSERT INTO likes (storyId, userId) VALUES(?,?)`,
+    [storyId, userId],
+    function(error){
+        if (error) throw new Error(error.message)
+    console.log(`User ${userId} liked story with id ${storyId}`)
+    }
+    )
+
+    return true;
+}
+
 export {
     createUser,
     loginUser,
     addAuthorName,
-    updateAuthorName
+    updateAuthorName,
+    addChapter,
+    likeStory,
+
 }
