@@ -8,17 +8,19 @@ async function createUser({ email, password }) {
     const hashing = bcrypt.hash(password, saltRounds, (_, hash) => {
         db.run(`INSERT INTO users (email, password) VALUES(?,?)`, [email, hash], function (error) {
             if (error) {
-                console.error(error.message);
+                throw new Error(error.message);
             }
             console.log(`Inserted a row with ID: ${this.lastID}`);
         });
     });
-    console.log(hashing);
+    console.log('hashing', hashing);
+    return hashing;
 }
+createUser({ email: 'jutn@hay.com', password: 'sheh' });
 function addAuthorName(authorName, userId) {
     db.run(`INSERT INTO authors (penName, userId) VALUES(${authorName}, ${userId})`, function (error) {
         if (error) {
-            return error;
+            throw new Error(error.message);
         }
         return `Inserted a row with ID: ${this.lastID}`;
     });
@@ -26,7 +28,7 @@ function addAuthorName(authorName, userId) {
 function updateAuthorName(authorName, userId) {
     db.run(`UPDATE authors SET penName = '${authorName}' WHERE userId = '${userId}'`, function (error) {
         if (error) {
-            return error;
+            throw new Error(error.message);
         }
         return `Inserted a row with ID: ${this.lastID}`;
     });
@@ -42,6 +44,5 @@ async function loginUser({ email, password }) {
     const match = await bcrypt.compare(password, hash);
     return match;
 }
-createUser({ email: "justin@gmail.com", password: "hey" });
 export { createUser, loginUser, addAuthorName, updateAuthorName };
 //# sourceMappingURL=helpers.js.map
