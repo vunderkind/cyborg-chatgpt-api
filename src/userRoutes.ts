@@ -2,17 +2,17 @@ import express from 'express';
 import dbHelpers from '../db/helpers/helpers.js';
 const app = express();
 
-const userRoutes = () => {
-    console.log('CHee');
-}
-
 app.post('/signup', async (req, res) => {
     const { email, password } = req.body;
-    const register = await dbHelpers.createUser({email, password});
-
-    res.send(register);
+    try {
+        const register = await dbHelpers.createUser({email, password});
+        res.send(register);
+    } catch(error) {
+        res.status(404);
+        res.send(error.message);
+    }
 
 
 })
 
-export default userRoutes;
+export default app;

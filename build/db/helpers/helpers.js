@@ -13,6 +13,9 @@ async function createUser({ email, password }) {
             console.log(`Inserted a row with ID: ${this.lastID}`);
         });
     });
+    return {
+        message: `new account created for user with email: ${email}`
+    };
 }
 function addAuthorName(authorName, userId) {
     db.run(`INSERT INTO authors (penName, userId) VALUES(${authorName}, ${userId})`, function (error) {
@@ -41,5 +44,27 @@ async function loginUser({ email, password }) {
     const match = await bcrypt.compare(password, hash);
     return match;
 }
-export { createUser, loginUser, addAuthorName, updateAuthorName };
+function addChapter({ storyId, text }) {
+    db.run(`INSERT INTO chapters (storyId, text) VALUES(?,?)`, [storyId, text], function (error) {
+        if (error)
+            throw new Error(error.message);
+        return `Inserted a row with ID: ${this.lastID}`;
+    });
+}
+function likeStory({ storyId, userId }) {
+    db.run(`INSERT INTO likes (storyId, userId) VALUES(?,?)`, [storyId, userId], function (error) {
+        if (error)
+            throw new Error(error.message);
+        console.log(`User ${userId} liked story with id ${storyId}`);
+    });
+    return true;
+}
+export default {
+    createUser,
+    loginUser,
+    addAuthorName,
+    updateAuthorName,
+    addChapter,
+    likeStory,
+};
 //# sourceMappingURL=helpers.js.map
