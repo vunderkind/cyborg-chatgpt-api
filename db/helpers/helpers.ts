@@ -8,7 +8,7 @@ type Credentials = {
     password: string,
 }
 
-async function createUser({email, password}: Credentials): Promise<void>{
+async function createUser({email, password}: Credentials): Promise<object>{
     const emailValidator = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if(!emailValidator.test(email)) throw new Error(`${email} is not an email address`);
     bcrypt.hash(password, saltRounds, (_, hash) => {
@@ -22,6 +22,10 @@ async function createUser({email, password}: Credentials): Promise<void>{
         }
         );
     });
+
+    return {
+        message: `new account created for user with email: ${email}`
+    }
 }
 
 function addAuthorName(authorName: string, userId: number): void {
@@ -83,7 +87,7 @@ function likeStory({storyId, userId}: {storyId: string, userId: string}): boolea
     return true;
 }
 
-export {
+export default {
     createUser,
     loginUser,
     addAuthorName,
