@@ -13,6 +13,24 @@ app.post('/signup', async (req, res) => {
     }
 
 
+});
+
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const loggedIn = await dbHelpers.loginUser({email, password });
+        if (loggedIn) {
+            res.send(loggedIn);
+        } else {
+            res.status(422);
+            res.send('Wrong credentials submitted');
+        }
+    } catch(error) {
+        res.status(404);
+        res.send(error.message);
+    }
+
+
 })
 
 export default app;
