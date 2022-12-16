@@ -20,5 +20,5 @@
     "strictNullChecks": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "__tests__/**/*", "**/*.ts", "**/*.tsx"],
+  "include": ["src/middleware/*", "src/**/*", "__tests__/**/*", "**/*.ts", "**/*.tsx"],
 }
