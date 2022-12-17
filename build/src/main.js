@@ -16,5 +16,5 @@ async function example(prompt) {
     });
     console.log(response);
 }
-example('A goat in space');
+example('Musicman');
 //# sourceMappingURL=main.js.map
