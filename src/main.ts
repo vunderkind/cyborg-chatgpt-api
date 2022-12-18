@@ -1,31 +1,27 @@
-import { ChatGPTAPI, getOpenAIAuth } from 'chatgpt';
 import dotenv from 'dotenv';
+import fetch from 'node-fetch';
 dotenv.config();
 
-const {OPENAI_EMAIL, OPENAI_PASSWORD} = process.env;
+const { OPENAI_API_KEY, OPENAI_URL} = process.env;
 
-console.log(OPENAI_EMAIL, OPENAI_PASSWORD);
+async function testing() {
+    const response = await fetch(OPENAI_URL, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + OPENAI_API_KEY,
+        },
+        body: JSON.stringify({
+            model: 'text-davinci-003',
+            prompt: `how would you write javascript code that simulate cloth physics? explain it like i'm five.`,
+            temperature: 0.9,
+            max_tokens: 4000,
+        }),
+    })
 
-async function example(prompt: string) {
-    const openAIAuth = await getOpenAIAuth({
-        email: OPENAI_EMAIL,
-        password: OPENAI_PASSWORD
+    const data: any = await response.json();
 
-    });
-
-    console.log(openAIAuth);
-
-    const API = new ChatGPTAPI({ ...openAIAuth});
-
-    await API.ensureAuth();
-
-    const response = await API.sendMessage(
-        `Write a fictional story in the comedy genre based on the following prompt: ${prompt}`, {
-            timeoutMs: 2 * 60 * 1000
-        }
-    )
-
-    console.log(response);
+    console.log(data);
 }
 
-example('A goat in space');
+testing();
